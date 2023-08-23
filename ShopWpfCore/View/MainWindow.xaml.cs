@@ -23,5 +23,7 @@ namespace ShopWpfCore.View
         {
             InitializeComponent();
         }
+
+        
     }
 }

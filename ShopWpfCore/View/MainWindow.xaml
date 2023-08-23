@@ -115,27 +115,27 @@
          materialDesign:HintAssist.Hint="Имя клиента" 
          Style="{StaticResource MaterialDesignFloatingHintTextBox}"
          Margin="5 5"
-         Text="{Binding name}"/>
+         Text="{Binding FirstName}"/>
             <TextBox x:Name="SurNameTextBox" 
          materialDesign:HintAssist.Hint="Фамилая клиента" 
          Style="{StaticResource MaterialDesignFloatingHintTextBox}"
          Margin="5 5"
-         Text="{Binding surname}"/>
+         Text="{Binding LastName}"/>
             <TextBox x:Name="PatronymicTextBox" 
          materialDesign:HintAssist.Hint="Отчество клиента" 
          Style="{StaticResource MaterialDesignFloatingHintTextBox}"
          Margin="5 5"
-         Text="{Binding patronymic}"/>
+         Text="{Binding MiddleName}"/>
             <TextBox x:Name="TelefonTextBox" 
          materialDesign:HintAssist.Hint="Номер телефона" 
          Style="{StaticResource MaterialDesignFloatingHintTextBox}"
          Margin="5 5"
-         Text="{Binding telefon}"/>
+         Text="{Binding Telefon}"/>
             <TextBox x:Name="E_mailTextBox" 
          materialDesign:HintAssist.Hint="e-mail" 
          Style="{StaticResource MaterialDesignFloatingHintTextBox}"
          Margin="5 5"
-         Text="{Binding e_mail}"/>
+         Text="{Binding E_mail}"/>
 
         </StackPanel>
 
@@ -158,29 +158,29 @@
           CurrentCellChanged="GVCurrentCellChanged">-->
 
                 <DataGrid.Columns>
-                    <DataGridTextColumn x:Name="id"
+                    <DataGridTextColumn 
                             Binding="{Binding Id}"
                             Header="ID"
                             IsReadOnly="True" 
                             Width="60"/>
-                    <DataGridTextColumn x:Name="surname"
-                            Binding="{Binding surname}"
+                    <DataGridTextColumn 
+                            Binding="{Binding LastName}"
                             Header="Фамилия"
                             Width="120"/>
-                    <DataGridTextColumn x:Name="name"
+                    <DataGridTextColumn
                             Binding="{Binding FirstName}"
                             Header="Имя"    
                             Width="100"/>
-                    <DataGridTextColumn x:Name="patronymic"
-                            Binding="{Binding patronymic}"
+                    <DataGridTextColumn 
+                            Binding="{Binding MiddleName}"
                             Header="Отчество"
                             Width="150"/>
-                    <DataGridTextColumn x:Name="telefon"
-                            Binding="{Binding telefon}"
+                    <DataGridTextColumn 
+                            Binding="{Binding Telefon}"
                             Header="Телефон"  
                             Width="120"/>
-                    <DataGridTextColumn x:Name="e_mail"
-                            Binding="{Binding e_mail}"
+                    <DataGridTextColumn 
+                            Binding="{Binding E_mail}"
                             Header="E-mail" 
                             Width="130"/>
                 </DataGrid.Columns>
@@ -200,26 +200,26 @@
           IsSynchronizedWithCurrentItem="True"
           SelectionMode="Single" 
           AutoGenerateColumns="False" 
-          ItemsSource="{Binding}"
+          ItemsSource="{Binding }"
           IsReadOnly="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn x:Name="id_product"
-                            Binding="{Binding id_product}"
+                            Binding="{Binding Id}"
                             Header="ID"
                             IsReadOnly="True" 
                             Width="60"/>
                     <DataGridTextColumn x:Name="E_mail"
-                            Binding="{Binding e_mail}"
+                            Binding="{Binding CustomerE_mail}"
                             Header="E-mail"
                             IsReadOnly="True" 
                             Width="100"/>
                     <DataGridTextColumn x:Name="productCode"
-                            Binding="{Binding productCode}"
+                            Binding="{Binding ProductCode}"
                             Header="Код продукта"
                             IsReadOnly="True"
                             Width="100"/>
                     <DataGridTextColumn x:Name="nameProduct"
-                            Binding="{Binding nameProduct}"
+                            Binding="{Binding ProductName}"
                             Header="Наименование"
                             IsReadOnly="True"
                             Width="150"/>
