@@ -29,8 +29,8 @@
             Cursor="Hand" Padding="0" 
             ToolTip="Выборка товаров клиента"
             Command="{Binding SelectOrdersCommand}"
-                    >
-                <!--Click="SelectProductButton">-->
+            CommandParameter="{Binding ElementName=gridView, Path=SelectedItem}">
+               
                 <materialDesign:PackIcon Kind="SelectSearch" 
                                      Width="25" Height="25" 
                                      HorizontalAlignment="Center" 
