@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,7 +27,7 @@ namespace ShopDAL.Models
 
         public string E_mail { get; set; } 
 
-        public ICollection<Order> Orders { get; set; }
+        public ICollection<Order> Orders { get; private set; } = new ObservableCollection<Order>();
 
         public override string ToString()
         {

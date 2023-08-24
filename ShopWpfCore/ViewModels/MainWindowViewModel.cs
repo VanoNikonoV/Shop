@@ -4,25 +4,52 @@ using ShopDAL.Models;
 using ShopDAL.EFCore;
 using System.Linq;
 using System.Collections.Generic;
+using System.Windows.Data;
+using Microsoft.EntityFrameworkCore;
+using ShopWpf.Commands;
+using System;
 
 namespace ShopWpf.ViewModels
 {
     internal class MainWindowViewModel : ViewModel
     {
-        public List<Customer> ShopRepository { get; set; }
-
+        private readonly ShopContext _shopContext;
+        public ObservableCollection<Customer> CustomersView { get; set; }
+        public ObservableCollection<Order> OrdersView { get; set; }
 
         public MainWindowViewModel()
         {
-            ShopRepository = new List<Customer>();
+            CustomersView = new ObservableCollection<Customer>();
+            OrdersView = new ObservableCollection<Order>();
 
-            using (var context = new ShopContext())
+            using (_shopContext = new ShopContext())
             {
-               ShopRepository = context.Customers.ToList();
+                _shopContext.Customers.Load<Customer>();
+                _shopContext.Orders.Load<Order>();
+                
+               CustomersView = _shopContext?.Customers.Local.ToObservableCollection();
 
+               OrdersView = _shopContext?.Orders.Local.ToObservableCollection();
             }
         }
 
+        #region Команды
 
+        private RelayCommand selectOrdersCommand = null!;
+        public RelayCommand SelectOrdersCommand =>
+            selectOrdersCommand ?? (selectOrdersCommand = new RelayCommand(SelectOrders, CanSelectOrders));
+
+        private bool CanSelectOrders()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void SelectOrders()
+        {
+            throw new NotImplementedException();
+        }
+
+
+        #endregion
     }
 }

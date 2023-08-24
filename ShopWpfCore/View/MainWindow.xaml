@@ -4,7 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ShopWpfCore.View"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+        
         mc:Ignorable="d"
         Title="Интернет магазин" 
         Height="500" Width="1400"
@@ -26,7 +27,9 @@
             IsDefault="True"
             Width="30" Height="30"
             Cursor="Hand" Padding="0" 
-            ToolTip="Выборка товаров клиента">
+            ToolTip="Выборка товаров клиента"
+            Command="{Binding SelectOrdersCommand}"
+                    >
                 <!--Click="SelectProductButton">-->
                 <materialDesign:PackIcon Kind="SelectSearch" 
                                      Width="25" Height="25" 
@@ -152,7 +155,7 @@
           SelectionMode="Single"
           IsSynchronizedWithCurrentItem="True"
           AutoGenerateColumns="False" 
-          ItemsSource="{Binding ShopRepository}"
+          ItemsSource="{Binding CustomersView}"
           IsReadOnly="False">
                 <!--CellEditEnding="GVCellEditEnding"
           CurrentCellChanged="GVCurrentCellChanged">-->
@@ -195,12 +198,12 @@
                 <DropShadowEffect BlurRadius="50" Color="Green" ShadowDepth="0"/>
             </Border.Effect>
 
-            <DataGrid x:Name="gridViewOrders"
+          <DataGrid x:Name="gridViewOrders"
           Margin="10"
           IsSynchronizedWithCurrentItem="True"
           SelectionMode="Single" 
           AutoGenerateColumns="False" 
-          ItemsSource="{Binding }"
+          ItemsSource="{Binding OrdersView}"
           IsReadOnly="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn x:Name="id_product"

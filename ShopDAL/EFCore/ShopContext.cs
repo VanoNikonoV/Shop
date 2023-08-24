@@ -29,7 +29,6 @@ namespace ShopDAL.EFCore
         {
             optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb; Database=shop", 
                 providerOptions => { providerOptions.EnableRetryOnFailure(2, TimeSpan.FromSeconds(5), null);});
-
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
