@@ -89,16 +89,24 @@ namespace ShopConsole
             productNames = new string[] 
             {
                 "телефон Xiaomi",
+                "телефон LG",
+                "телефон Samsung",
                 "телевизор Xiaomi",
                 "пылесос Xiaomi",
                 "пылесос Samsung",
                 "утюг Philips",
                 "чайник Philips",
+                "чайник Vitek",
                 "кофемолка Philips",
+                "кофемолка Vitek",
                 "ноутбук Acer",
                 "смартфон Appel",
+                "смартфон Nokia",
+                "смартфон Motorola",
                 "пылесос Appel",
                 "телевизор Sony",
+                "телевизор Samsung",
+                "телевизор LG",
                 "видеомагнитафон Sharp"
             };
 
@@ -134,6 +142,8 @@ namespace ShopConsole
         public static List<Order> GetOrders(int count) 
         {
             List<Order> orders = new List<Order>();
+
+            count  = count + count;
 
             for (int i = 0; i < count; i++)
             {

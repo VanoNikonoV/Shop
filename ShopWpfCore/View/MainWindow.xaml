@@ -89,8 +89,6 @@
                                      Foreground="#FFB73A51"/>
             </Button>
 
-
-
             <Button VerticalAlignment="Bottom" HorizontalAlignment="Left" 
             Style="{StaticResource MaterialDesignFlatButton}"
             IsCancel="True" 
@@ -151,12 +149,13 @@
             </Border.Effect>
 
             <DataGrid x:Name="gridView"
-          Margin="10"
-          SelectionMode="Single"
-          IsSynchronizedWithCurrentItem="True"
-          AutoGenerateColumns="False" 
-          ItemsSource="{Binding CustomersView}"
-          IsReadOnly="False">
+                      Margin="10"
+                      SelectionMode="Single"
+                      IsSynchronizedWithCurrentItem="True"
+                      AutoGenerateColumns="False" 
+                      ItemsSource="{Binding CustomersView}"
+                      IsReadOnly="False"
+                      CanUserAddRows="False">
                 <!--CellEditEnding="GVCellEditEnding"
           CurrentCellChanged="GVCurrentCellChanged">-->
 
