@@ -1,10 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ShopDAL.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ShopDAL.EFCore
 {
@@ -27,10 +22,18 @@ namespace ShopDAL.EFCore
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb; Database=shop", 
-                providerOptions => { providerOptions.EnableRetryOnFailure(2, TimeSpan.FromSeconds(5), null);});
+            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb; Database=shop; Trusted_Connection=True;",
+                providerOptions => { providerOptions.EnableRetryOnFailure(2, TimeSpan.FromSeconds(5), null); });
+            
+            //.EnableDetailedErrors()
+            //.EnableSensitiveDataLogging()
+            //.LogTo(Console.WriteLine, LogLevel.Information);
         }
 
+        /// <summary>
+        /// Насторойка для моделирования сущностей в EFCore
+        /// </summary>
+        /// <param name="modelBuilder"></param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //Имя таблицы в БД
@@ -70,7 +73,8 @@ namespace ShopDAL.EFCore
                 .HasOne(u => u.Customer)
                 .WithMany(c => c.Orders)
                 .HasForeignKey(u => u.CustomerE_mail)
-                .HasPrincipalKey(c => c.E_mail);
+                .HasPrincipalKey(c => c.E_mail)
+                .IsRequired();
 
         }
     }

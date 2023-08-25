@@ -28,7 +28,7 @@
             Cursor="Hand" Padding="0" 
             ToolTip="Выборка товаров клиента"
             Command="{Binding SelectOrdersCommand}"
-            CommandParameter="{Binding ElementName=gridView, Path=SelectedItem}">
+            CommandParameter="{Binding ElementName=gridViewCustomer, Path=SelectedItem}">
                
                 <materialDesign:PackIcon Kind="SelectSearch" 
                                      Width="25" Height="25" 
@@ -80,8 +80,11 @@
             Margin="0 5"
             Cursor="Hand" 
             Padding="0" 
-            ToolTip="Удалить клиента">
-                <!--Click="DeletCustomerButton">-->
+            ToolTip="Удалить клиента"
+            Command="{Binding DeletCustomerCommand}"
+            CommandParameter="{Binding ElementName=gridViewCustomer, 
+                      Path=SelectedItem}">
+               
                 <materialDesign:PackIcon Kind="AccountCancel" 
                                      Width="25" Height="25" 
                                      HorizontalAlignment="Center" 
@@ -110,7 +113,8 @@
                     Orientation="Vertical"
                     Grid.Column="1"
                     Margin="0 0 10 0"
-                    DataContext="{Binding ElementName=gridView, Path=SelectedItem}">
+                    DataContext="{Binding ElementName=gridViewCustomer, 
+                                  Path=SelectedItem}">
 
             <TextBox
                  materialDesign:HintAssist.Hint="Имя клиента" 
@@ -148,7 +152,7 @@
                 <DropShadowEffect BlurRadius="50" Color="Green" ShadowDepth="0"/>
             </Border.Effect>
 
-            <DataGrid x:Name="gridView"
+            <DataGrid x:Name="gridViewCustomer"
                       Margin="10"
                       SelectionMode="Single"
                       IsSynchronizedWithCurrentItem="True"

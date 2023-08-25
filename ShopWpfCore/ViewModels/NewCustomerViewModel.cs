@@ -39,11 +39,11 @@ namespace ShopWpfCore.ViewModels
 
         #region Команды
 
-        private RelayCommand addCustomerCommand = null;
+        private RelayCommand addCustomerCommand = null!;
         public RelayCommand AddCustomerCommand => addCustomerCommand ?? (new RelayCommand(AddClient, CanAddClient));
 
 
-        private RelayCommand cancelCommand = null;
+        private RelayCommand cancelCommand = null!;
         public RelayCommand CancelCommand => cancelCommand ?? (new RelayCommand(Cancel));
 
         #endregion
@@ -68,12 +68,8 @@ namespace ShopWpfCore.ViewModels
         /// <summary>
         /// Закртытие окна бесподверждения сохранения клиента
         /// </summary>
-        private void Cancel()
-        {
-            _window.DialogResult = false;
-
-            newCustomer = null!;
-        }
+        private void Cancel() =>  _window.DialogResult = false;
+        
     }
 
 }

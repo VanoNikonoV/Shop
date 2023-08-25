@@ -49,7 +49,22 @@ namespace ShopWpf.ViewModels
         public RelayCommand AddNewCustomerCommand =>
             addNewCustomerCommand ?? (addNewCustomerCommand = new RelayCommand(AddNewCustomer));
 
+        private RelayCommandT<Customer> deleteCustomerCommand = null!;
+        public RelayCommandT<Customer> DeletCustomerCommand =>
+            deleteCustomerCommand ?? (deleteCustomerCommand = new RelayCommandT<Customer>(DeletCustomer, CanDeletCustomer));
 
+        private bool CanDeletCustomer(Customer customer) => customer != null ? true: false;
+       
+
+        private void DeletCustomer(Customer customer)
+        {
+            using (_shopContext = new ShopContext())
+            {
+                _shopContext.Customers.Remove(customer);
+
+                _shopContext.SaveChangesAsync();
+            }
+        }
 
         #endregion
 
