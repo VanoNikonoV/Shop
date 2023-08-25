@@ -5,7 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ShopWpfCore.View"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
-        
         mc:Ignorable="d"
         Title="Интернет магазин" 
         Height="500" Width="1400"
@@ -46,8 +45,9 @@
             Margin="0 5"
             Cursor="Hand" 
             Padding="0" 
-            ToolTip="Добавить клиента">
-                <!--Click="AddNewCustomerButton">-->
+            ToolTip="Добавить клиента"
+            Command="{Binding AddNewCustomerCommand}">
+                
                 <materialDesign:PackIcon Kind="AccountPlusOutline" 
                                      Width="25" Height="25" 
                                      HorizontalAlignment="Center" 
@@ -107,43 +107,43 @@
         </StackPanel>
 
         <StackPanel Name="СustomerEditPanel"
-            Orientation="Vertical"
-            Grid.Column="1"
-            Margin="0 0 10 0"
-            DataContext="{Binding ElementName=gridView, Path=SelectedItem}">
+                    Orientation="Vertical"
+                    Grid.Column="1"
+                    Margin="0 0 10 0"
+                    DataContext="{Binding ElementName=gridView, Path=SelectedItem}">
 
-            <TextBox x:Name="NameTextBox" 
-         materialDesign:HintAssist.Hint="Имя клиента" 
-         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-         Margin="5 5"
-         Text="{Binding FirstName}"/>
-            <TextBox x:Name="SurNameTextBox" 
-         materialDesign:HintAssist.Hint="Фамилая клиента" 
-         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-         Margin="5 5"
-         Text="{Binding LastName}"/>
-            <TextBox x:Name="PatronymicTextBox" 
-         materialDesign:HintAssist.Hint="Отчество клиента" 
-         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-         Margin="5 5"
-         Text="{Binding MiddleName}"/>
-            <TextBox x:Name="TelefonTextBox" 
-         materialDesign:HintAssist.Hint="Номер телефона" 
-         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-         Margin="5 5"
-         Text="{Binding Telefon}"/>
-            <TextBox x:Name="E_mailTextBox" 
-         materialDesign:HintAssist.Hint="e-mail" 
-         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-         Margin="5 5"
-         Text="{Binding E_mail}"/>
+            <TextBox
+                 materialDesign:HintAssist.Hint="Имя клиента" 
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                 Margin="5 5"
+                 Text="{Binding FirstName}"/>
+            <TextBox  
+                 materialDesign:HintAssist.Hint="Фамилая клиента" 
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                 Margin="5 5"
+                 Text="{Binding LastName}"/>
+            <TextBox  
+                 materialDesign:HintAssist.Hint="Отчество клиента" 
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                 Margin="5 5"
+                 Text="{Binding MiddleName}"/>
+            <TextBox  
+                 materialDesign:HintAssist.Hint="Номер телефона" 
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                 Margin="5 5"
+                 Text="{Binding Telefon}"/>
+            <TextBox 
+                 materialDesign:HintAssist.Hint="e-mail" 
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                 Margin="5 5"
+                 Text="{Binding E_mail}"/>
 
         </StackPanel>
 
         <Border Grid.Column="2" 
-        Background ="White" 
-        CornerRadius="25"
-        Margin="5">
+                Background ="White" 
+                CornerRadius="25"
+                Margin="5"> 
             <Border.Effect>
                 <DropShadowEffect BlurRadius="50" Color="Green" ShadowDepth="0"/>
             </Border.Effect>
@@ -190,20 +190,20 @@
         </Border>
 
         <Border Grid.Column="3" 
-        Background ="White" 
-        CornerRadius="25"
-        Margin="5">
+                Background ="White" 
+                CornerRadius="25"
+                Margin="5">
             <Border.Effect>
                 <DropShadowEffect BlurRadius="50" Color="Green" ShadowDepth="0"/>
             </Border.Effect>
 
-          <DataGrid x:Name="gridViewOrders"
-          Margin="10"
-          IsSynchronizedWithCurrentItem="True"
-          SelectionMode="Single" 
-          AutoGenerateColumns="False" 
-          ItemsSource="{Binding OrdersView}"
-          IsReadOnly="False">
+            <DataGrid x:Name="gridViewOrders"
+                      Margin="10"
+                      IsSynchronizedWithCurrentItem="True"
+                      SelectionMode="Single" 
+                      AutoGenerateColumns="False" 
+                      ItemsSource="{Binding OrdersView}"
+                      IsReadOnly="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn x:Name="id_product"
                             Binding="{Binding Id}"

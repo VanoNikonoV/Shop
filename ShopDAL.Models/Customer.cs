@@ -7,25 +7,87 @@ using System.Threading.Tasks;
 
 namespace ShopDAL.Models
 {
-    public class Customer
+    /// <summary>
+    /// Класс описывающий модель клиента
+    /// </summary>
+    public partial class Customer
     {
         public int Id { get; set; }
         /// <summary>
         /// Имя
         /// </summary>
-        public string FirstName { get; set; }
+        public string FirstName
+        {
+            get { return this.firstName; }
+
+            set
+            {
+                if (this.firstName == value) return;
+
+                this.firstName = value;
+                OnPropertyChanged(nameof(FirstName));
+            }
+        }
         /// <summary>
         /// Отчество
         /// </summary>
-        public string MiddleName { get; set; } 
+        public string MiddleName
+        {
+            get { return this.middleName; }
+
+            set
+            {
+                if (this.middleName == value) return;
+
+                this.middleName = value;
+                OnPropertyChanged(nameof(MiddleName));
+            }
+        }
         /// <summary>
         /// Фамилия
         /// </summary>
-        public string LastName { get; set; }
+        public string LastName
+        {
+            get { return this.lastName; }
 
-        public string Telefon { get; set; }
+            set
+            {
+                if (this.lastName == value) return;
 
-        public string E_mail { get; set; } 
+                this.lastName = value;
+                OnPropertyChanged(nameof(LastName));
+            }
+        }
+        /// <summary>
+        /// Номер телефона
+        /// </summary>
+        public string Telefon
+        {
+            get { return this.telefon; }
+
+            set
+            {
+                if (this.telefon == value) return;
+
+                this.telefon = value;
+                OnPropertyChanged(nameof(Telefon));
+            }
+        }
+        /// <summary>
+        /// Адрес электронной почты
+        /// </summary>
+        public string E_mail
+        {
+            get { return this.e_mail; }
+
+            set
+            {
+                if (this.e_mail == value) return;
+
+                this.e_mail = value;
+                OnPropertyChanged(nameof(E_mail));
+            }
+        }
 
         public ICollection<Order> Orders { get; private set; } = new ObservableCollection<Order>();
 

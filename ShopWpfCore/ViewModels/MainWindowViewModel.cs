@@ -17,6 +17,7 @@ namespace ShopWpf.ViewModels
 {
     internal class MainWindowViewModel : ViewModel
     {
+        
         private ShopContext _shopContext;
         public ObservableCollection<Customer> CustomersView { get; set; }
         public ObservableCollection<Order> OrdersView { get; set; }
@@ -43,17 +44,28 @@ namespace ShopWpf.ViewModels
         public RelayCommandT<Customer> SelectOrdersCommand =>
             selectOrdersCommand ?? (selectOrdersCommand = new RelayCommandT<Customer>(SelectOrders, CanSelectOrders));
 
+        private RelayCommand addNewCustomerCommand = null!;
+
+        public RelayCommand AddNewCustomerCommand =>
+            addNewCustomerCommand ?? (addNewCustomerCommand = new RelayCommand(AddNewCustomer));
+
 
 
         #endregion
 
         #region Методы для команд
 
-        private bool CanSelectOrders(Customer customer)
-        {
-            return customer == null ? false : true;
-        }
+        /// <summary>
+        /// Определяе возможность выполнения команды SelectOrders
+        /// </summary>
+        /// <param name="customer">Выбранный клиент</param>
+        /// <returns> true - если customer не null, иначе false</returns>
+        private bool CanSelectOrders(Customer customer) => customer == null ? false : true;
 
+        /// <summary>
+        /// Создает окно выборки и передает в него данные с формированные по customer.E_mail
+        /// </summary>
+        /// <param name="customer">Выбранные клиент</param>
         private void SelectOrders(Customer customer)
         {
             SelectOrdersWindow selectOrders = new SelectOrdersWindow() { Owner = Application.Current.MainWindow };
@@ -71,6 +83,30 @@ namespace ShopWpf.ViewModels
                 selectOrders.DataContext = selectOrdersViewModel;
 
                 selectOrders.ShowDialog();
+            }
+        }
+
+        /// <summary>
+        /// Добавляет нового клиента в базу данных
+        /// </summary>
+        private void AddNewCustomer()
+        {
+            NewCustomerWindow newCustomerWindow = new NewCustomerWindow() 
+                {  Owner = Application.Current.MainWindow };
+
+            NewCustomerViewModel newCustomerViewModel = new NewCustomerViewModel(newCustomerWindow);
+
+            newCustomerWindow.DataContext = newCustomerViewModel;
+
+            newCustomerWindow.ShowDialog();
+
+            if (newCustomerWindow.DialogResult == true)
+            {
+                using (_shopContext = new ShopContext())
+                {
+                    _shopContext.Customers.Add(newCustomerViewModel.NewCustomer);
+                    _shopContext.SaveChangesAsync();
+                }
             }
         }
 
