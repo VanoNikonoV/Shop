@@ -6,17 +6,47 @@ using System.Threading.Tasks;
 
 namespace ShopDAL.Models
 {
-    public class Order
+    public partial class Order
     {
         public int Id { get; set; }
 
-        public string CustomerE_mail { get; set; }
+        public string CustomerE_mail 
+        {
+            get => this.customerE_mail;
+            set
+            {
+                if (this.customerE_mail == value) return;
 
-        public string ProductCode { get; set; }
+                this.customerE_mail = value;
+                OnPropertyChanged(nameof(CustomerE_mail));
+            }
+        }
 
-        public string ProductName { get; set; }
+        public string ProductCode
+        {
+            get => this.productCode;
+            set
+            {   if (this.productCode == value) return;
 
-        public Customer Customer { get; set; }
+                this.productCode = value;
+                OnPropertyChanged(nameof(ProductCode));
+            }
+        }
+
+        public string ProductName 
+        {
+            get => this.productName;
+
+            set
+            {
+                if (this.productName == value) return;
+                
+                this.productName = value;
+                OnPropertyChanged($"{nameof(ProductName)}");
+            }
+        }
+
+        public Customer Customer { get; }
 
         public override string ToString()
         {

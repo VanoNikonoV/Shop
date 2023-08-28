@@ -43,23 +43,16 @@ namespace ShopWpf.ViewModels
             selectOrdersCommand ?? (selectOrdersCommand = new RelayCommandT<Customer>(SelectOrders, CanSelectOrders));
 
         private RelayCommand addNewCustomerCommand = null!;
-
         public RelayCommand AddNewCustomerCommand =>
-            addNewCustomerCommand ?? (addNewCustomerCommand = new RelayCommand(AddNewCustomer));
+            addNewCustomerCommand ?? (addNewCustomerCommand = new RelayCommand(AddNewCustomerAsync));
 
         private RelayCommandT<Customer> deleteCustomerCommand = null!;
         public RelayCommandT<Customer> DeletCustomerCommand =>
             deleteCustomerCommand ?? (deleteCustomerCommand = new RelayCommandT<Customer>(DeletCustomer, CanDeletCustomer));
 
-        private bool CanDeletCustomer(Customer customer) => customer != null ? true: false;
-       
-
-        private void DeletCustomer(Customer customer)
-        {
-            ShopContext.Customers.Remove(customer);
-
-            ShopContext.SaveChangesAsync();
-        }
+        private RelayCommandT<Customer> addOrderCommand = null!;
+        public RelayCommandT<Customer> AddOrderCommand => 
+            addOrderCommand ?? (addOrderCommand = new RelayCommandT<Customer>(AddOrderAsync));
 
         #endregion
 
@@ -82,22 +75,22 @@ namespace ShopWpf.ViewModels
 
             string e_mailCustomer = customer.E_mail;
 
-                var ordersForCustomer = ShopContext.Orders
-                    .Where(x => x.CustomerE_mail == e_mailCustomer)
-                    .ToList();
+            var ordersForCustomer = ShopContext.Orders
+                .Where(x => x.CustomerE_mail == e_mailCustomer)
+                .ToList();
 
-                SelectOrdersViewModel selectOrdersViewModel = new SelectOrdersViewModel(ordersForCustomer);
+            SelectOrdersViewModel selectOrdersViewModel = new SelectOrdersViewModel(ordersForCustomer);
 
-                selectOrders.DataContext = selectOrdersViewModel;
+            selectOrders.DataContext = selectOrdersViewModel;
 
-                selectOrders.ShowDialog();
+            selectOrders.ShowDialog();
             
         }
 
         /// <summary>
         /// Добавляет нового клиента в базу данных
         /// </summary>
-        private void AddNewCustomer()
+        private async void AddNewCustomerAsync()
         {
             NewCustomerWindow newCustomerWindow = new NewCustomerWindow() 
                 {  Owner = Application.Current.MainWindow };
@@ -110,9 +103,41 @@ namespace ShopWpf.ViewModels
 
             if (newCustomerWindow.DialogResult == true)
             {
-                ShopContext.Customers.Add(newCustomerViewModel.NewCustomer);
+                await ShopContext.Customers.AddAsync(newCustomerViewModel.NewCustomer);
 
-                ShopContext.SaveChangesAsync();
+                await ShopContext.SaveChangesAsync();
+            }
+        }
+
+        private bool CanDeletCustomer(Customer customer) => customer != null ? true : false;
+
+        /// <summary>
+        /// Удаляет выделенного клиента и его заказы
+        /// </summary>
+        /// <param name="customer"></param>
+        private void DeletCustomer(Customer customer)
+        {
+            ShopContext.Customers.Remove(customer);
+
+            ShopContext.SaveChangesAsync();
+        }
+
+        private async void AddOrderAsync(Customer currentCustomer)
+        {
+            AddOrderWindow addOrderWindow = new AddOrderWindow() 
+                {  Owner = Application.Current.MainWindow };
+
+            AddOrderViewModel addOrderViewModel = new AddOrderViewModel(addOrderWindow, currentCustomer.E_mail);
+
+            addOrderWindow.DataContext = addOrderViewModel;
+
+            addOrderWindow.ShowDialog();
+
+            if (addOrderWindow.DialogResult == true)
+            {
+                await ShopContext.Orders.AddAsync(addOrderViewModel.NewOrder);
+
+                await ShopContext.SaveChangesAsync();
             }
         }
 

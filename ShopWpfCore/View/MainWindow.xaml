@@ -28,7 +28,8 @@
             Cursor="Hand" Padding="0" 
             ToolTip="Выборка товаров клиента"
             Command="{Binding SelectOrdersCommand}"
-            CommandParameter="{Binding ElementName=gridViewCustomer, Path=SelectedItem}">
+            CommandParameter="{Binding ElementName=gridViewCustomer, 
+                Path=SelectedItem}">
                
                 <materialDesign:PackIcon Kind="SelectSearch" 
                                      Width="25" Height="25" 
@@ -63,8 +64,11 @@
             Cursor="Hand" 
             Margin="0 5"
             Padding="0" 
-            ToolTip="Добавить товар для выбранного клиента">
-                <!--Click="AddProductButton">-->
+            ToolTip="Добавить товар для выбранного клиента"
+            Command="{Binding AddOrderCommand}"
+            CommandParameter="{Binding ElementName=gridViewCustomer, 
+                Path=SelectedItem}">
+
                 <materialDesign:PackIcon Kind="AddCircleOutline" 
                                      Width="25" Height="25" 
                                      HorizontalAlignment="Center" 
