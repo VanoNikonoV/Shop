@@ -17,8 +17,7 @@ namespace ShopWpf.ViewModels
 {
     internal class MainWindowViewModel : ViewModel
     {
-        
-        private ShopContext _shopContext;
+        public ShopContext ShopContext { get; set; }
         public ObservableCollection<Customer> CustomersView { get; set; }
         public ObservableCollection<Order> OrdersView { get; set; }
 
@@ -27,15 +26,14 @@ namespace ShopWpf.ViewModels
             CustomersView = new ObservableCollection<Customer>();
             OrdersView = new ObservableCollection<Order>();
 
-            using (_shopContext = new ShopContext())
-            {
-                _shopContext.Customers.Load<Customer>();
-                _shopContext.Orders.Load<Order>();
+            ShopContext = new();
+            
+            ShopContext.Customers.Load<Customer>();
+            ShopContext.Orders.Load<Order>();
                 
-               CustomersView = _shopContext?.Customers.Local.ToObservableCollection();
-
-               OrdersView = _shopContext?.Orders.Local.ToObservableCollection();
-            }
+            CustomersView = ShopContext?.Customers.Local.ToObservableCollection();
+            OrdersView = ShopContext?.Orders.Local.ToObservableCollection();
+            
         }
 
         #region Команды
@@ -58,12 +56,9 @@ namespace ShopWpf.ViewModels
 
         private void DeletCustomer(Customer customer)
         {
-            using (_shopContext = new ShopContext())
-            {
-                _shopContext.Customers.Remove(customer);
+            ShopContext.Customers.Remove(customer);
 
-                _shopContext.SaveChangesAsync();
-            }
+            ShopContext.SaveChangesAsync();
         }
 
         #endregion
@@ -87,9 +82,7 @@ namespace ShopWpf.ViewModels
 
             string e_mailCustomer = customer.E_mail;
 
-            using (_shopContext = new ShopContext())
-            {
-                var ordersForCustomer = _shopContext.Orders
+                var ordersForCustomer = ShopContext.Orders
                     .Where(x => x.CustomerE_mail == e_mailCustomer)
                     .ToList();
 
@@ -98,7 +91,7 @@ namespace ShopWpf.ViewModels
                 selectOrders.DataContext = selectOrdersViewModel;
 
                 selectOrders.ShowDialog();
-            }
+            
         }
 
         /// <summary>
@@ -117,11 +110,9 @@ namespace ShopWpf.ViewModels
 
             if (newCustomerWindow.DialogResult == true)
             {
-                using (_shopContext = new ShopContext())
-                {
-                    _shopContext.Customers.Add(newCustomerViewModel.NewCustomer);
-                    _shopContext.SaveChangesAsync();
-                }
+                ShopContext.Customers.Add(newCustomerViewModel.NewCustomer);
+
+                ShopContext.SaveChangesAsync();
             }
         }
 

@@ -1,4 +1,5 @@
-﻿using ShopWpf.ViewModels;
+﻿using ShopWpf.View.Base;
+using ShopWpf.ViewModels;
 using ShopWpfCore.View;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace ShopWpfCore
     /// </summary>
     public partial class App : Application
     {
+        private MainWindowViewModel viewModel;
         protected override void OnStartup(StartupEventArgs e)
         {
 
@@ -33,12 +35,23 @@ namespace ShopWpfCore
 
             MainWindow window = new MainWindow();
 
-            var viewModel = new MainWindowViewModel();
+            viewModel = new();
 
             window.DataContext = viewModel;
 
             window.Show();
 
         }
+
+        protected override async void OnExit(ExitEventArgs e)
+        {
+            await viewModel.ShopContext.DisposeAsync();
+
+            viewModel.Dispose();
+
+            base.OnExit(e);
+        }
+
+
     }
 }
