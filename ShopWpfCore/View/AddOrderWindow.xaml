@@ -51,14 +51,14 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
             <RowDefinition Height="40"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
 
         <StackPanel DataContext="{Binding NewOrder}"
                     Orientation="Horizontal" 
-                    Grid.Row="0" 
+                    Grid.Row="1" 
                     HorizontalAlignment="Center">
 
             <TextBox  Text="{Binding Path=ProductName, 
@@ -68,7 +68,7 @@
                       materialDesign:HintAssist.Hint="Наименование"
                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                       Margin="5 5" 
-                      Width="100"/>
+                      Width="120"/>
             
             <TextBox  Text="{Binding Path=ProductCode, 
                       UpdateSourceTrigger=LostFocus,
@@ -76,27 +76,24 @@
                       ValidatesOnDataErrors=True}"
                       materialDesign:HintAssist.Hint="Код продукта" 
                       Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                      Margin="5 5" Width="100"/>
+                      Margin="5 5" Width="120"/>
 
         </StackPanel>
 
         <StackPanel DataContext="{Binding NewOrder}"
                     Orientation="Horizontal" 
-                    Grid.Row="1" 
+                    Grid.Row="2" 
                     HorizontalAlignment="Center">
 
-            <TextBox Text="{Binding Path=CustomerE_mail, 
-                     UpdateSourceTrigger=LostFocus, 
-                     Mode=TwoWay,
-                     ValidatesOnDataErrors=True}"
+            <TextBox Text="{Binding Path=CustomerE_mail}"
                      materialDesign:HintAssist.Hint="e-mail" 
                      Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                     Margin="5 5" Width="100"
+                     Margin="5 5" Width="150"
                      IsReadOnly="True"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" 
-             Grid.Row="2" HorizontalAlignment="Right"
+             Grid.Row="0" HorizontalAlignment="Right"
              >
             <Button VerticalAlignment="Bottom" HorizontalAlignment="Right" 
              Style="{StaticResource MaterialDesignFlatButton}"

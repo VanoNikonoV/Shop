@@ -129,7 +129,7 @@ namespace ShopConsole
                     FirstName = firstNames[GetDataForTabels.randomize.Next(GetDataForTabels.firstNames.Length)],
                     MiddleName = middleNames[GetDataForTabels.randomize.Next(GetDataForTabels.middleNames.Length)],
                     LastName = secondNames[GetDataForTabels.randomize.Next(GetDataForTabels.secondNames.Length)],
-                    Telefon = telefon.ToString(),
+                    Telefon = "+" + telefon.ToString(),
                     E_mail = i.ToString() + email,
                 };
 

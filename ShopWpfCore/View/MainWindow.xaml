@@ -1,4 +1,4 @@
-﻿<Window x:Class="ShopWpfCore.View.MainWindow"
+﻿<Window x:Name="window" x:Class="ShopWpfCore.View.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,9 +7,49 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
         mc:Ignorable="d"
         Title="Интернет магазин" 
-        Height="500" Width="1385"
-        Background="#FFDADADA"> 
-    <Grid>
+        Height="500" Width="1385" MaxWidth="1400"
+        Background="#FFDADADA">
+
+    <Window.Resources>
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Background" Value="#FFFAFAFA"/>
+            <Setter Property="FontFamily" Value="Calibri"/>
+            <Setter Property="Cursor"  Value="Arrow"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="Validation.ErrorTemplate">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <DockPanel>
+                            <Grid DockPanel.Dock="Right" Width="16" Height="16"
+                         VerticalAlignment="Center" Margin="3 0 0 0">
+                                <Ellipse Width="16" Height="16" Fill="Red"/>
+                                <Ellipse Width="3" Height="8" 
+                     VerticalAlignment="Top" HorizontalAlignment="Center" 
+                     Margin="0 2 0 0" Fill="White"/>
+                                <Ellipse Width="2" Height="2" VerticalAlignment="Bottom" 
+                     HorizontalAlignment="Center" Margin="0 0 0 2" 
+                     Fill="White"/>
+                            </Grid>
+                            <Border BorderBrush="Red" BorderThickness="2" CornerRadius="2">
+                                <AdornedElementPlaceholder/>
+                            </Border>
+                        </DockPanel>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="true">
+                    <Setter Property="ToolTip" Value="{Binding RelativeSource=
+                 {x:Static RelativeSource.Self}, 
+                 Path=(Validation.Errors)[0].ErrorContent}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Grid Cursor="Hand">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="35"/>
             <ColumnDefinition Width="185"/>
@@ -30,7 +70,7 @@
             Command="{Binding SelectOrdersCommand}"
             CommandParameter="{Binding ElementName=gridViewCustomer, 
                 Path=SelectedItem}">
-               
+
                 <materialDesign:PackIcon Kind="SelectSearch" 
                                      Width="25" Height="25" 
                                      HorizontalAlignment="Center" 
@@ -48,7 +88,7 @@
             Padding="0" 
             ToolTip="Добавить клиента"
             Command="{Binding AddNewCustomerCommand}">
-                
+
                 <materialDesign:PackIcon Kind="AccountPlusOutline" 
                                      Width="25" Height="25" 
                                      HorizontalAlignment="Center" 
@@ -56,18 +96,38 @@
                                      Foreground="#FF71B73A"/>
             </Button>
 
+            <Button VerticalAlignment="Bottom"
+                 Style="{StaticResource MaterialDesignFlatButton}"
+                 HorizontalAlignment="Center"
+                 IsDefault="True"
+                 Width="30" Height="30"
+                 Padding="0"
+                 Cursor="Hand" 
+                 Margin="0 5"
+                 ToolTip="Подтвердить изменения"
+                 Command="{Binding EditCustomerCommand}"
+                 CommandParameter="{Binding ElementName=gridViewCustomer, 
+                               Path=SelectedItem}">
+
+                <materialDesign:PackIcon Kind="Edit" 
+                              Width="25" Height="25" 
+                              HorizontalAlignment="Center" 
+                              VerticalAlignment="Center" 
+                              Foreground="#FF71B73A"/>
+            </Button>
+
             <Button VerticalAlignment="Bottom" 
-            HorizontalAlignment="Center"
-            Style="{StaticResource MaterialDesignFlatButton}"
-            IsDefault="True"
-            Width="30" Height="30"
-            Cursor="Hand" 
-            Margin="0 5"
-            Padding="0" 
-            ToolTip="Добавить товар для выбранного клиента"
-            Command="{Binding AddOrderCommand}"
-            CommandParameter="{Binding ElementName=gridViewCustomer, 
-                Path=SelectedItem}">
+                HorizontalAlignment="Center"
+                Style="{StaticResource MaterialDesignFlatButton}"
+                IsDefault="True"
+                Width="30" Height="30"
+                Cursor="Hand" 
+                Margin="0 5"
+                Padding="0" 
+                ToolTip="Добавить товар для выбранного клиента"
+                Command="{Binding AddOrderCommand}"
+                CommandParameter="{Binding ElementName=gridViewCustomer, 
+                    Path=SelectedItem}">
 
                 <materialDesign:PackIcon Kind="AddCircleOutline" 
                                      Width="25" Height="25" 
@@ -77,18 +137,18 @@
             </Button>
 
             <Button VerticalAlignment="Bottom" 
-            HorizontalAlignment="Center"
-            Style="{StaticResource MaterialDesignFlatButton}"
-            IsDefault="True"
-            Width="30" Height="30"
-            Margin="0 5"
-            Cursor="Hand" 
-            Padding="0" 
-            ToolTip="Удалить клиента"
-            Command="{Binding DeletCustomerCommand}"
-            CommandParameter="{Binding ElementName=gridViewCustomer, 
-                      Path=SelectedItem}">
-               
+                HorizontalAlignment="Center"
+                Style="{StaticResource MaterialDesignFlatButton}"
+                IsDefault="True"
+                Width="30" Height="30"
+                Margin="0 5"
+                Cursor="Hand" 
+                Padding="0" 
+                ToolTip="Удалить клиента"
+                Command="{Binding DeletCustomerCommand}"
+                CommandParameter="{Binding ElementName=gridViewCustomer, 
+                          Path=SelectedItem}">
+
                 <materialDesign:PackIcon Kind="AccountCancel" 
                                      Width="25" Height="25" 
                                      HorizontalAlignment="Center" 
@@ -105,7 +165,7 @@
             Margin="3,5,0,5" 
             ToolTip="Очистка таблиц"
             Command="{Binding ClearTableCommand}">
-                
+
                 <materialDesign:PackIcon Kind="CloseOutline" 
                                  Width="25" Height="25" 
                                  HorizontalAlignment="Center" 
@@ -113,9 +173,8 @@
                                  Foreground="#FFB73A51"/>
             </Button>
         </StackPanel>
-
-        <StackPanel Name="СustomerEditPanel"
-                    Orientation="Vertical"
+    
+        <StackPanel Orientation="Vertical"
                     Grid.Column="1"
                     Margin="0 0 10 0"
                     DataContext="{Binding ElementName=gridViewCustomer, 
@@ -125,34 +184,41 @@
                  materialDesign:HintAssist.Hint="Имя клиента" 
                  Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                  Margin="5 5"
-                 Text="{Binding FirstName}"/>
+                 Text="{Binding FirstName, 
+                    UpdateSourceTrigger=LostFocus, 
+                    Mode=TwoWay,
+                    ValidatesOnDataErrors=True}"/>
             <TextBox  
                  materialDesign:HintAssist.Hint="Фамилая клиента" 
                  Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                  Margin="5 5"
-                 Text="{Binding LastName}"/>
+                 Text="{Binding LastName,
+                    UpdateSourceTrigger=LostFocus, 
+                    Mode=TwoWay,
+                    ValidatesOnDataErrors=True}"/>
             <TextBox  
                  materialDesign:HintAssist.Hint="Отчество клиента" 
                  Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                  Margin="5 5"
-                 Text="{Binding MiddleName}"/>
+                 Text="{Binding MiddleName, 
+                    UpdateSourceTrigger=LostFocus, 
+                    Mode=TwoWay,
+                    ValidatesOnDataErrors=True}"/>
             <TextBox  
                  materialDesign:HintAssist.Hint="Номер телефона" 
                  Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                  Margin="5 5"
-                 Text="{Binding Telefon}"/>
-            <TextBox 
-                 materialDesign:HintAssist.Hint="e-mail" 
-                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                 Margin="5 5"
-                 Text="{Binding E_mail}"/>
-
+                 Text="{Binding Telefon, 
+                        UpdateSourceTrigger=LostFocus, 
+                        Mode=TwoWay,
+                        ValidatesOnDataErrors=True}"/>
+           
         </StackPanel>
 
         <Border Grid.Column="2" 
                 Background ="White" 
                 CornerRadius="25"
-                Margin="5"> 
+                Margin="5">
             <Border.Effect>
                 <DropShadowEffect BlurRadius="50" Color="Green" ShadowDepth="0"/>
             </Border.Effect>
@@ -165,8 +231,6 @@
                       ItemsSource="{Binding CustomersView}"
                       IsReadOnly="False"
                       CanUserAddRows="False">
-                <!--CellEditEnding="GVCellEditEnding"
-          CurrentCellChanged="GVCurrentCellChanged">-->
 
                 <DataGrid.Columns>
                     <DataGridTextColumn 
@@ -177,22 +241,27 @@
                     <DataGridTextColumn 
                             Binding="{Binding LastName}"
                             Header="Фамилия"
+                            IsReadOnly="True"
                             Width="120"/>
                     <DataGridTextColumn
                             Binding="{Binding FirstName}"
-                            Header="Имя"    
+                            Header="Имя" 
+                            IsReadOnly="True"
                             Width="100"/>
                     <DataGridTextColumn 
                             Binding="{Binding MiddleName}"
                             Header="Отчество"
+                            IsReadOnly="True"
                             Width="150"/>
                     <DataGridTextColumn 
                             Binding="{Binding Telefon}"
-                            Header="Телефон"  
+                            Header="Телефон"
+                            IsReadOnly="True"
                             Width="120"/>
                     <DataGridTextColumn 
                             Binding="{Binding E_mail}"
                             Header="E-mail" 
+                            IsReadOnly="True"
                             Width="130"/>
                 </DataGrid.Columns>
             </DataGrid>

@@ -18,7 +18,7 @@ namespace ShopWpf.ViewModels
 {
     internal class MainWindowViewModel : ViewModel
     {
-        public ShopContext ShopContext { get; set; }
+        public ShopContext ShopContext { get; private set; }
         public ObservableCollection<Customer> CustomersView { get; set; }
         public ObservableCollection<Order> OrdersView { get; set; }
 
@@ -43,20 +43,30 @@ namespace ShopWpf.ViewModels
         public RelayCommandT<Customer> SelectOrdersCommand =>
             selectOrdersCommand ?? (selectOrdersCommand = new RelayCommandT<Customer>(SelectOrders, CanSelectOrders));
 
+
         private RelayCommand addNewCustomerCommand = null!;
         public RelayCommand AddNewCustomerCommand =>
             addNewCustomerCommand ?? (addNewCustomerCommand = new RelayCommand(AddNewCustomerAsync));
+
 
         private RelayCommandT<Customer> deleteCustomerCommand = null!;
         public RelayCommandT<Customer> DeletCustomerCommand =>
             deleteCustomerCommand ?? (deleteCustomerCommand = new RelayCommandT<Customer>(DeletCustomer, CanDeletCustomer));
 
+
         private RelayCommandT<Customer> addOrderCommand = null!;
         public RelayCommandT<Customer> AddOrderCommand => 
             addOrderCommand ?? (addOrderCommand = new RelayCommandT<Customer>(AddOrderAsync));
 
+
         private RelayCommand clearTableCommand = null!;
-        public RelayCommand ClearTableCommand => clearTableCommand ?? (clearTableCommand = new RelayCommand(ClearTableAsync));
+        public RelayCommand ClearTableCommand => 
+            clearTableCommand ?? (clearTableCommand = new RelayCommand(ClearTableAsync));
+
+
+        private RelayCommandT<Customer> editCustomerCommand = null!;
+        public RelayCommandT<Customer> EditCustomerCommand => 
+            editCustomerCommand ?? (editCustomerCommand = new RelayCommandT<Customer>(EditCustomer, CanEditCustomer));
 
         #endregion
 
@@ -158,6 +168,20 @@ namespace ShopWpf.ViewModels
 
             ShopContext.Customers.RemoveRange(allRecord);
 
+            await ShopContext.SaveChangesAsync();
+        }
+
+
+        private bool CanEditCustomer(Customer customer) => customer!= null ? true : false;
+
+        /// <summary>
+        /// Метод изменения данных клиента
+        /// </summary>
+        /// <param name="currentCustomer">Выбранные клиент</param>
+        private async void EditCustomer(Customer currentCustomer)
+        {
+            ShopContext.Customers.Update(currentCustomer);
+            
             await ShopContext.SaveChangesAsync();
         }
 
