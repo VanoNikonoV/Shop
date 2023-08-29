@@ -12,6 +12,7 @@ using ShopWpfCore.View;
 using System.Windows;
 using ShopWpfCore.ViewModels;
 using System.Diagnostics;
+using Castle.Core.Resource;
 
 namespace ShopWpf.ViewModels
 {
@@ -53,6 +54,9 @@ namespace ShopWpf.ViewModels
         private RelayCommandT<Customer> addOrderCommand = null!;
         public RelayCommandT<Customer> AddOrderCommand => 
             addOrderCommand ?? (addOrderCommand = new RelayCommandT<Customer>(AddOrderAsync));
+
+        private RelayCommand clearTableCommand = null!;
+        public RelayCommand ClearTableCommand => clearTableCommand ?? (clearTableCommand = new RelayCommand(ClearTableAsync));
 
         #endregion
 
@@ -122,6 +126,10 @@ namespace ShopWpf.ViewModels
             ShopContext.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Добавление нового заказа для выбранного клиента
+        /// </summary>
+        /// <param name="currentCustomer"></param>
         private async void AddOrderAsync(Customer currentCustomer)
         {
             AddOrderWindow addOrderWindow = new AddOrderWindow() 
@@ -139,6 +147,18 @@ namespace ShopWpf.ViewModels
 
                 await ShopContext.SaveChangesAsync();
             }
+        }
+
+        /// <summary>
+        /// Удаление всех записей в таблицах
+        /// </summary>
+        private async void ClearTableAsync()
+        {
+            var allRecord = ShopContext.Customers;
+
+            ShopContext.Customers.RemoveRange(allRecord);
+
+            await ShopContext.SaveChangesAsync();
         }
 
         #endregion
