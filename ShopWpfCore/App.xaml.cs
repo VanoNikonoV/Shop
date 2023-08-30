@@ -22,7 +22,6 @@ namespace ShopWpfCore
         private MainWindowViewModel viewModel;
         protected override void OnStartup(StartupEventArgs e)
         {
-
             var cultureInfo = new CultureInfo("ru-RU");
             Thread.CurrentThread.CurrentCulture = cultureInfo;
             Thread.CurrentThread.CurrentUICulture = cultureInfo;

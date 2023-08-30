@@ -5,17 +5,7 @@ namespace ShopDAL.EFCore
 {
     public class ShopContext : DbContext
     {
-        public ShopContext() 
-        {
-            DirectoryInfo di = new DirectoryInfo(Directory.GetCurrentDirectory());
-
-            if (di.Exists == false)
-                di.Create();
-
-            DirectoryInfo dis = di.CreateSubdirectory("Data");
-
-            DbPath = Path.Join(Directory.GetCurrentDirectory(), "Data\\shop.db");
-        }
+        public ShopContext() { }
 
         public ShopContext(DbContextOptions options):base(options) { }
 
@@ -23,16 +13,10 @@ namespace ShopDAL.EFCore
         
         public DbSet<Order> Orders { get; set; }
 
-        public string DbPath { get; }
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer($"Server=(localdb)\\mssqllocaldb; Database={DbPath}; Trusted_Connection=True;",
+            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb; Database=shop; Trusted_Connection=True;",
                 providerOptions => { providerOptions.EnableRetryOnFailure(2, TimeSpan.FromSeconds(5), null); });
-            
-            //.EnableDetailedErrors()
-            //.EnableSensitiveDataLogging()
-            //.LogTo(Console.WriteLine, LogLevel.Information);
         }
 
         /// <summary>

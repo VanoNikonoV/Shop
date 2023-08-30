@@ -1,16 +1,12 @@
 ﻿using ShopDAL.Models.Validator;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ShopDAL.Models
 {
     public partial class Order : INotifyPropertyChanged, IDataErrorInfo
     {
-
         private string customerE_mail;
 
         private string productCode;

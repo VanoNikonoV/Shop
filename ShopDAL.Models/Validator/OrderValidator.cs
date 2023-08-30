@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace ShopDAL.Models.Validator
 {
-    internal class OrderValidator : AbstractValidator<Order>
+    public class OrderValidator : AbstractValidator<Order>
     {
         public OrderValidator()
         {

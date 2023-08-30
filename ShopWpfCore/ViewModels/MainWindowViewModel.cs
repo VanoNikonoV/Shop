@@ -12,6 +12,9 @@ using ShopWpfCore.ViewModels;
 
 namespace ShopWpf.ViewModels
 {
+    /// <summary>
+    /// Логика взаимодествия с главным окном 
+    /// </summary>
     internal class MainWindowViewModel : ViewModel
     {
         #region Поля и свойства

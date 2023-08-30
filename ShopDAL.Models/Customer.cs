@@ -8,6 +8,9 @@ namespace ShopDAL.Models
     /// </summary>
     public partial class Customer
     {
+        /// <summary>
+        /// Идентификатор клиента
+        /// </summary>
         public int Id { get; set; }
         /// <summary>
         /// Имя

@@ -1,21 +1,18 @@
 ﻿using ShopDAL.Models;
+using ShopDAL.Models.Validator;
 using ShopWpf.Commands;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Documents;
 
 namespace ShopWpfCore.ViewModels
 {
+    /// <summary>
+    /// Логика добавления заказа
+    /// </summary>
     internal class AddOrderViewModel
     {
         private Window _window;
 
-        //private CustomerValidator customerValidator;
+        private OrderValidator orderValidator;
 
         public Order NewOrder { get; }
 
@@ -24,6 +21,8 @@ namespace ShopWpfCore.ViewModels
             _window = OwnerWindow;
 
             NewOrder = new Order() { CustomerE_mail = E_mail};
+
+            orderValidator = new();
         }
 
         #region Команды
@@ -40,10 +39,9 @@ namespace ShopWpfCore.ViewModels
 
         private bool CanAddOrder()
         {
-            //var resultValidator = customerValidator?.Validate(newCustomer);
+            var resultValidator = orderValidator?.Validate(NewOrder);
 
-            //return resultValidator.IsValid ? true : false;
-            return true;
+            return resultValidator.IsValid ? true : false;
         }
 
         private void AddOrder() => _window.DialogResult = true;

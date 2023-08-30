@@ -62,7 +62,7 @@
                     HorizontalAlignment="Center">
 
             <TextBox  Text="{Binding Path=ProductName, 
-                      UpdateSourceTrigger=LostFocus,
+                      UpdateSourceTrigger=PropertyChanged,
                       Mode=TwoWay,
                       ValidatesOnDataErrors=True}"
                       materialDesign:HintAssist.Hint="Наименование"
@@ -71,7 +71,7 @@
                       Width="120"/>
             
             <TextBox  Text="{Binding Path=ProductCode, 
-                      UpdateSourceTrigger=LostFocus,
+                      UpdateSourceTrigger=PropertyChanged,
                       Mode=TwoWay,
                       ValidatesOnDataErrors=True}"
                       materialDesign:HintAssist.Hint="Код продукта" 

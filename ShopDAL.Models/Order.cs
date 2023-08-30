@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ShopDAL.Models
+﻿namespace ShopDAL.Models
 {
     public partial class Order
     {
+        /// <summary>
+        /// Идентификатор заказа
+        /// </summary>
         public int Id { get; set; }
-
+        /// <summary>
+        /// Внешний ключ. Е-mail клиента
+        /// </summary>
         public string CustomerE_mail 
         {
             get => this.customerE_mail;
@@ -21,7 +20,9 @@ namespace ShopDAL.Models
                 OnPropertyChanged(nameof(CustomerE_mail));
             }
         }
-
+        /// <summary>
+        /// Код продукта
+        /// </summary>
         public string ProductCode
         {
             get => this.productCode;
@@ -32,7 +33,9 @@ namespace ShopDAL.Models
                 OnPropertyChanged(nameof(ProductCode));
             }
         }
-
+        /// <summary>
+        /// Наименование продукта
+        /// </summary>
         public string ProductName 
         {
             get => this.productName;
@@ -45,7 +48,9 @@ namespace ShopDAL.Models
                 OnPropertyChanged($"{nameof(ProductName)}");
             }
         }
-
+        /// <summary>
+        /// Навигационное свойство
+        /// </summary>
         public Customer Customer { get; }
 
         public override string ToString()
