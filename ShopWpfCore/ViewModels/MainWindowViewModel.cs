@@ -18,23 +18,43 @@ namespace ShopWpf.ViewModels
 {
     internal class MainWindowViewModel : ViewModel
     {
-        public ShopContext ShopContext { get; private set; }
-        public ObservableCollection<Customer> CustomersView { get; set; }
-        public ObservableCollection<Order> OrdersView { get; set; }
+        #region Поля и свойства
+        public ShopContext? ShopContext { get; private set; }
+
+
+        private ObservableCollection<Customer>? customersView;
+        public ObservableCollection<Customer> CustomersView
+        {
+            get
+            {
+                if (customersView == null && ShopContext != null)
+                {
+                    ShopContext.Customers.Load<Customer>();
+                    customersView = ShopContext?.Customers.Local.ToObservableCollection();
+                }
+                return customersView!;
+            }
+        }
+
+
+        private ObservableCollection<Order>? ordersView;
+        public ObservableCollection<Order> OrdersView
+        {
+            get
+            {
+                if (ordersView == null && ShopContext != null)
+                {
+                    ShopContext.Orders.Load<Order>();
+                    ordersView = ShopContext?.Orders.Local.ToObservableCollection();
+                }
+                return ordersView;
+            }
+        }
+        #endregion
 
         public MainWindowViewModel()
         {
-            CustomersView = new ObservableCollection<Customer>();
-            OrdersView = new ObservableCollection<Order>();
-
             ShopContext = new();
-            
-            ShopContext.Customers.Load<Customer>();
-            ShopContext.Orders.Load<Order>();
-                
-            CustomersView = ShopContext?.Customers.Local.ToObservableCollection();
-            OrdersView = ShopContext?.Orders.Local.ToObservableCollection();
-            
         }
 
         #region Команды
@@ -109,7 +129,9 @@ namespace ShopWpf.ViewModels
             NewCustomerWindow newCustomerWindow = new NewCustomerWindow() 
                 {  Owner = Application.Current.MainWindow };
 
-            NewCustomerViewModel newCustomerViewModel = new NewCustomerViewModel(newCustomerWindow);
+            List<Customer> AllCustomer = ShopContext?.Customers.Local.ToList();
+
+            NewCustomerViewModel newCustomerViewModel = new NewCustomerViewModel(newCustomerWindow, AllCustomer);
 
             newCustomerWindow.DataContext = newCustomerViewModel;
 
@@ -171,8 +193,17 @@ namespace ShopWpf.ViewModels
             await ShopContext.SaveChangesAsync();
         }
 
+        private bool CanEditCustomer(Customer customer) //=> customer!= null ? true : false;
+        {
+            if (customer != null && customer.Error == string.Empty) //
+            {
+                //var currentCustomer = ShopContext.Customers.Single(e => e.Id == customer.Id);
 
-        private bool CanEditCustomer(Customer customer) => customer!= null ? true : false;
+                return ShopContext.Entry(customer).State == EntityState.Modified ? true : false;
+            }
+            return false;
+        }
+           
 
         /// <summary>
         /// Метод изменения данных клиента

@@ -1,11 +1,9 @@
 ﻿using ShopDAL.Models;
 using ShopWpf.Commands;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
+
+
 
 namespace ShopWpfCore.ViewModels
 {
@@ -14,25 +12,35 @@ namespace ShopWpfCore.ViewModels
     /// </summary>
     internal class NewCustomerViewModel
     {
+        /// <summary>
+        /// Новый клиент
+        /// </summary>
         private Customer newCustomer;
 
         private CustomerValidator customerValidator;
 
+        /// <summary>
+        /// Список всех клиентов для проверки поля e-mail на уникальность
+        /// </summary>
+        private List<Customer> allCustomer;
+
         private Window _window;
         public Customer NewCustomer { get => newCustomer; } 
 
-        public NewCustomerViewModel(Window window)
+        public NewCustomerViewModel(Window window, List<Customer> AllCustomer)
         {
             //данные чтобы не ругался FluentValidation ---> customerValidator?.Validate(newCustomer);
             newCustomer = new Customer() 
                 {   FirstName = "Имя", 
                     MiddleName="Отчество", 
                     LastName = "Фамилия", 
-                    E_mail = "...@mail.ru", 
-                    Telefon = "+79......" 
+                    E_mail = "@mail.ru", 
+                    Telefon = "+79" 
                 };
 
             customerValidator = new CustomerValidator();
+
+            allCustomer = AllCustomer;
 
             this._window = window;
         }
@@ -58,7 +66,22 @@ namespace ShopWpfCore.ViewModels
         {
             var resultValidator = customerValidator?.Validate(newCustomer);
 
-            return resultValidator.IsValid ? true : false;
+            if(resultValidator.IsValid) 
+            {
+                if(allCustomer.Exists(f => f.E_mail == newCustomer.E_mail))
+                {
+                    MessageBox.Show(messageBoxText: "Клинет с таки e-mail уже существует",
+                                                caption: "Ощибка в данных",
+                                                MessageBoxButton.OK,
+                                                icon: MessageBoxImage.Error);
+
+                    newCustomer.E_mail = "";
+
+                    return false;
+                }
+                return true; 
+            }
+            return false;
         }
         /// <summary>
         /// Заверщение работы окна с подвержение нового клиента

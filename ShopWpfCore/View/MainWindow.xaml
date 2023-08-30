@@ -185,7 +185,7 @@
                  Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                  Margin="5 5"
                  Text="{Binding FirstName, 
-                    UpdateSourceTrigger=LostFocus, 
+                    UpdateSourceTrigger=PropertyChanged, 
                     Mode=TwoWay,
                     ValidatesOnDataErrors=True}"/>
             <TextBox  
@@ -193,7 +193,7 @@
                  Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                  Margin="5 5"
                  Text="{Binding LastName,
-                    UpdateSourceTrigger=LostFocus, 
+                    UpdateSourceTrigger=PropertyChanged, 
                     Mode=TwoWay,
                     ValidatesOnDataErrors=True}"/>
             <TextBox  
@@ -201,7 +201,7 @@
                  Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                  Margin="5 5"
                  Text="{Binding MiddleName, 
-                    UpdateSourceTrigger=LostFocus, 
+                    UpdateSourceTrigger=PropertyChanged, 
                     Mode=TwoWay,
                     ValidatesOnDataErrors=True}"/>
             <TextBox  
@@ -209,7 +209,7 @@
                  Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                  Margin="5 5"
                  Text="{Binding Telefon, 
-                        UpdateSourceTrigger=LostFocus, 
+                        UpdateSourceTrigger=PropertyChanged, 
                         Mode=TwoWay,
                         ValidatesOnDataErrors=True}"/>
            

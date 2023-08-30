@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ShopDAL.Models
 {
@@ -48,7 +45,7 @@ namespace ShopDAL.Models
         private string middleName;
         private string telefon;
         private string e_mail;
-        private CustomerValidator validator;
+        private CustomerValidator validator = new CustomerValidator();
         #endregion
 
         #region PropertyChanged
