@@ -7,7 +7,6 @@ Console.WriteLine("------ Shop ------");
 
 using(var context = new ShopContext()) 
 {
-
     context.Database.EnsureDeleted();
     context.Database.EnsureCreated();
 
@@ -35,6 +34,4 @@ using(var context = new ShopContext())
         Console.WriteLine(order);
     }
     Console.ReadLine();
-
-    
 }

@@ -4,15 +4,11 @@ using ShopDAL.Models;
 using ShopDAL.EFCore;
 using System.Linq;
 using System.Collections.Generic;
-using System.Windows.Data;
 using Microsoft.EntityFrameworkCore;
 using ShopWpf.Commands;
-using System;
 using ShopWpfCore.View;
 using System.Windows;
 using ShopWpfCore.ViewModels;
-using System.Diagnostics;
-using Castle.Core.Resource;
 
 namespace ShopWpf.ViewModels
 {
@@ -23,6 +19,9 @@ namespace ShopWpf.ViewModels
 
 
         private ObservableCollection<Customer>? customersView;
+        /// <summary>
+        /// Коллекция клиентов
+        /// </summary>
         public ObservableCollection<Customer> CustomersView
         {
             get
@@ -38,6 +37,9 @@ namespace ShopWpf.ViewModels
 
 
         private ObservableCollection<Order>? ordersView;
+        /// <summary>
+        /// Коллеция заказов
+        /// </summary>
         public ObservableCollection<Order> OrdersView
         {
             get
@@ -55,6 +57,7 @@ namespace ShopWpf.ViewModels
         public MainWindowViewModel()
         {
             ShopContext = new();
+            ShopContext.Database.EnsureCreated();
         }
 
         #region Команды
@@ -86,7 +89,7 @@ namespace ShopWpf.ViewModels
 
         private RelayCommandT<Customer> editCustomerCommand = null!;
         public RelayCommandT<Customer> EditCustomerCommand => 
-            editCustomerCommand ?? (editCustomerCommand = new RelayCommandT<Customer>(EditCustomer, CanEditCustomer));
+            editCustomerCommand ?? (editCustomerCommand = new RelayCommandT<Customer>(EditCustomerAsync, CanEditCustomer));
 
         #endregion
 
@@ -193,23 +196,27 @@ namespace ShopWpf.ViewModels
             await ShopContext.SaveChangesAsync();
         }
 
-        private bool CanEditCustomer(Customer customer) //=> customer!= null ? true : false;
+        /// <summary>
+        /// Включение/выключение кнопки в зависимость от условий:
+        /// - отсутсвие ощибок в данных customer.Error == string.Empty,
+        /// - наличие изменений в данных EntityState.Modified
+        /// </summary>
+        /// <param name="customer">Выбранный клиент</param>
+        /// <returns>true - если customer не null и уловия выполены, иначе false</returns>
+        private bool CanEditCustomer(Customer customer)
         {
-            if (customer != null && customer.Error == string.Empty) //
+            if (customer != null && customer.Error == string.Empty) 
             {
-                //var currentCustomer = ShopContext.Customers.Single(e => e.Id == customer.Id);
-
                 return ShopContext.Entry(customer).State == EntityState.Modified ? true : false;
             }
             return false;
         }
            
-
         /// <summary>
         /// Метод изменения данных клиента
         /// </summary>
         /// <param name="currentCustomer">Выбранные клиент</param>
-        private async void EditCustomer(Customer currentCustomer)
+        private async void EditCustomerAsync(Customer currentCustomer)
         {
             ShopContext.Customers.Update(currentCustomer);
             
