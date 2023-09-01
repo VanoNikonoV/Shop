@@ -49,7 +49,9 @@ namespace ShopDAL.Models
         {
             if (string.IsNullOrEmpty(value)) return true;
 
-            return value.Substring(1).All(Char.IsDigit) ? true : false;
+            bool isDigit = value.Skip(1).All(Char.IsDigit);
+
+            return isDigit;
         }
 
         /// <summary>
